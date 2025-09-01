@@ -4,7 +4,7 @@ import zipfile
 import io
 import os
 
-BACKEND_URL = st.sidebar.text_input('Backend URL', value='http://localhost:8000/api')
+BACKEND_URL = st.sidebar.text_input('Backend URL', value='http://localhost:8000')
 
 st.title('PDF Extractor (text, tables, images)')
 
@@ -14,7 +14,7 @@ if uploaded_file:
     with st.spinner('Sending to backend...'):
         files = {'file': (uploaded_file.name, uploaded_file.getvalue(), 'application/pdf')}
         try:
-            resp = requests.post(f"{BACKEND_URL}/extract", files=files, timeout=120)
+            resp = requests.post(f"{BACKEND_URL}/api/extract", files=files, timeout=120)
             resp.raise_for_status()
             zip_bytes = resp.content
         except Exception as e:
